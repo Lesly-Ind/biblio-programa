@@ -1,88 +1,110 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 import Dashboard from "./pages/Dashboard";
 import Usuarios from "./pages/Usuarios";
 import Roles from "./pages/Roles";
+import Libros from "./pages/Libros";
+import Prestamos from "./pages/Prestamos";
+import Multas from "./pages/Multas";
+import Reportes from "./pages/Reportes";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
+    <Routes>
 
-      {/* SIDEBAR */}
-      <div
-        style={{
-          width: "260px",
-          background: "#111827",
-          color: "white",
-          padding: "20px",
-        }}
-      >
-        <h2 style={{ textAlign: "center", marginBottom: "30px" }}>
-          📚 Biblioteca
-        </h2>
+      {/* LOGIN */}
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      {/* REGISTER */}
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
-          <Link
-            to="/"
-            style={linkStyle}
-          >
-            🏠 Dashboard
-          </Link>
+      {/* DASHBOARD */}
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-          <Link
-            to="/usuarios"
-            style={linkStyle}
-          >
-            👥 Usuarios
-          </Link>
+      {/* USUARIOS */}
+      <Route
+        path="/usuarios"
+        element={
+          <ProtectedRoute>
+            <Usuarios />
+          </ProtectedRoute>
+        }
+      />
 
-          <Link
-            to="/roles"
-            style={linkStyle}
-          >
-            🔐 Roles
-          </Link>
+      {/* ROLES */}
+      <Route
+        path="/roles"
+        element={
+          <ProtectedRoute>
+            <Roles />
+          </ProtectedRoute>
+        }
+      />
 
-        </nav>
-      </div>
+      {/* LIBROS */}
+      <Route
+        path="/libros"
+        element={
+          <ProtectedRoute>
+            <Libros />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* CONTENIDO */}
-      <div style={{ flex: 1 }}>
+      {/* PRÉSTAMOS */}
+      <Route
+        path="/prestamos"
+        element={
+          <ProtectedRoute>
+            <Prestamos />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* NAVBAR */}
-        <div
-          style={{
-            background: "#2563eb",
-            color: "white",
-            padding: "15px 20px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h3 style={{ margin: 0 }}>Sistema de Biblioteca</h3>
-          <span>👤 Admin</span>
-        </div>
+      {/* MULTAS */}
+      <Route
+        path="/multas"
+        element={
+          <ProtectedRoute>
+            <Multas />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* PAGES */}
-        <div style={{ padding: "20px" }}>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/usuarios" element={<Usuarios />} />
-            <Route path="/roles" element={<Roles />} />
-          </Routes>
-        </div>
+      {/* REPORTES */}
+      <Route
+        path="/reportes"
+        element={
+          <ProtectedRoute>
+            <Reportes />
+          </ProtectedRoute>
+        }
+      />
 
-      </div>
+      {/* REDIRECCIÓN */}
+      <Route
+        path="*"
+        element={<Navigate to="/login" replace />}
+      />
 
-    </div>
+    </Routes>
   );
 }
-
-const linkStyle: React.CSSProperties = {
-  color: "white",
-  textDecoration: "none",
-  padding: "10px",
-  borderRadius: "8px",
-  background: "#1f2937",
-};
